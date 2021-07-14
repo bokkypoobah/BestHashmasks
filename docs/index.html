@@ -95,7 +95,7 @@
                   <span v-if="selectedItemIsGIF"> - Frame {{ selectedItemFrame == null ? '(loading)' : selectedItemFrame }}</span>
                 </template>
                 <div class="d-block text-center">
-                  <img id="thegif1" :src="selectedURL" :rel:animated_src="selectedURL" width="400" height="400" rel:auto_play="0" rel:rubbable="1" class="pr-3" />
+                  <img id="thegif1" :src="selectedURL" :rel:animated_src="selectedURL" width="480" rel:auto_play="0" rel:rubbable="1" class="pr-3" />
                 </div>
                 <b-input-group v-if="selectedItemIsGIF">
                   <template #prepend>
