@@ -63,11 +63,21 @@
             <b-navbar-brand to="./" variant="primary" v-b-popover.hover.bottom="'Best BastardGANPunks'">
               BESTHASHMASKS
             </b-navbar-brand>
+            <!--
             <div v-if="getTotalSupply > 100" v-for="item in getSelectedShowcase">
               <b-link @click="displayToken(item)">
                 <b-avatar rounded="sm" variant="light" size="3.0rem" :src="data[item].osimage" v-b-popover.hover.bottom="'#' + item" class="ml-2"></b-avatar>
               </b-link>
             </div>
+            -->
+
+            <div v-for="item in getSelectedShowcase">
+              <b-link @click="displayToken(item)">
+                <b-avatar rounded="sm" variant="light" size="3.0rem" :src="'images/Hashmask_' + item + '.jpg'" v-b-popover.hover.bottom="'#' + item" class="ml-2"></b-avatar>
+              </b-link>
+            </div>
+
+
             <b-navbar-nav class="ml-auto">
               <b-button size="sm" variant="outline-primary" class="ml-4" v-b-popover.hover="'CONNECT TO SEE YOUR BASTARDS'" @click="connect();" v-if="!connected">CONNECT MY FUCKING WALLET</b-button>
               <b-button size="sm" variant="outline-primary" class="ml-4" v-b-popover.hover="'DISCONNECT TO SEE BOKKY\'S BASTARDS'" @click="disconnect();" v-if="connected">MY FUCKING WALLET {{ ensOrShortName(account) }}</b-button>
@@ -549,7 +559,8 @@
             { key: 'owner', label: 'OWNER' },
             { key: 'tokens', label: 'TONKENS' },
           ],
-          bokkysBastards: [3053, 4689, 5846, 5982, 6403, 7222, 7333, 7567, 9738, 10375, 10456, 10564, 10729, 10731, 10734, 10735, 10738, 10739, 10834, 11106],
+          bokkysBastards: [10410, 10551, 13255, 13292, 13567, 14644, 2734, 5372, 6824, 8784, 9570],
+
           // TODO: Manage tags, including sync (add, remove, update)
           hoodies: {"9":["HOODIE"],"366":["HOODIE"],"590":["HOODIE"],"722":["HOODIE"],"816":["HOODIE"],"847":["HOODIE"],"1057":["HOODIE"],"1097":["HOODIE"],"1278":["HOODIE"],"1313":["HOODIE"],"1620":["HOODIE"],"1693":["HOODIE"],"1714":["HOODIE"],"2110":["HOODIE"],"2415":["HOODIE"],"2521":["HOODIE"],"2662":["HOODIE"],"2890":["HOODIE"],"2964":["HOODIE"],"3212":["HOODIE"],"3716":["HOODIE"],"4075":["HOODIE"],"4140":["HOODIE"],"4211":["HOODIE"],"4284":["HOODIE"],"4500":["HOODIE"],"4738":["HOODIE"],"4752":["HOODIE"],"5432":["HOODIE"],"5542":["HOODIE"],"5720":["HOODIE"],"5785":["HOODIE"],"6203":["HOODIE"],"6408":["HOODIE"],"6719":["HOODIE"],"7091":["HOODIE"],"7096":["HOODIE"],"7426":["HOODIE"],"7458":["HOODIE"],"7567":["HOODIE"],"7725":["HOODIE"],"7825":["HOODIE"],"8024":["HOODIE"],"8187":["HOODIE"],"8428":["HOODIE"],"8550":["HOODIE"],"8667":["HOODIE"],"8671":["HOODIE"],"8718":["HOODIE"],"8860":["HOODIE"],"8915":["HOODIE"],"9321":["HOODIE"],"9379":["HOODIE"],"9387":["HOODIE"],"9786":["HOODIE"],"10267":["HOODIE"],"10991":["HOODIE"]},
         },
@@ -835,7 +846,7 @@
                   function handleAccountsChanged(accounts) {
                     console.log("handleAccountsChanged: " + JSON.stringify(accounts));
                     t.account = accounts[0];
-                    localStorage.setItem('bastardMyAccount', JSON.stringify(t.account));
+                    localStorage.setItem('hashmaskMyAccount', JSON.stringify(t.account));
                     t.recalculate('web3 account update');
                   }
                   if (!this.connected) {
@@ -844,7 +855,7 @@
 
                   const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                   this.account = accounts[0];
-                  localStorage.setItem('bastardMyAccount', JSON.stringify(this.account));
+                  localStorage.setItem('hashmaskMyAccount', JSON.stringify(this.account));
                 } catch (e) {
                   console.log("connect(): Error connecting");
                 }
@@ -869,7 +880,7 @@
                   }
                 }
                 this.owners = owners;
-                localStorage.setItem('bastardsOwners', JSON.stringify(owners));
+                localStorage.setItem('hashmaskOwners', JSON.stringify(owners));
                 const ensMap = {};
                 for (let i in owners) {
                   const owner = owners[i].toLowerCase();
@@ -896,7 +907,7 @@
                 ensMap["0x000000000000000000000000000000000000dEaD".toLowerCase()] = "BurnAddress_";
                 ensMap["0xcCcBF11AC3030ee8CD7a04CFE15a3718df6dD030".toLowerCase()] = "NFT20_";
                 this.ensMap = ensMap;
-                localStorage.setItem('bastardsENSMap', JSON.stringify(ensMap));
+                localStorage.setItem('hashmaskENSMap', JSON.stringify(ensMap));
                 this.processing = "RECALCULATING DATA";
                 this.recalculate('data loaded via web3');
                 this.processing = null;
@@ -1037,10 +1048,10 @@
                 Vue.delete(this.tags, key);
               }
             }
-            localStorage.setItem('bastardsTags', JSON.stringify(this.tags));
+            localStorage.setItem('hashmaskTags', JSON.stringify(this.tags));
           },
           saveSettings() {
-            localStorage.setItem('bastardsSettings', JSON.stringify(this.settings));
+            localStorage.setItem('hashmaskSettings', JSON.stringify(this.settings));
           },
           ensOrShortName(address) {
               let name = this.ensMap[address.toLowerCase()];
@@ -1053,24 +1064,24 @@
 
 
         mounted() {
-          if (localStorage.getItem('bastardsOwners')) {
-            this.owners = JSON.parse(localStorage.getItem('bastardsOwners'));
+          if (localStorage.getItem('hashmaskOwners')) {
+            this.owners = JSON.parse(localStorage.getItem('hashmaskOwners'));
           } else {
             this.owners = OWNERSSNAPSHOT;
           }
-          if (localStorage.getItem('bastardMyAccount')) {
-            this.account = JSON.parse(localStorage.getItem('bastardMyAccount'));
+          if (localStorage.getItem('hashmaskMyAccount')) {
+            this.account = JSON.parse(localStorage.getItem('hashmaskMyAccount'));
           }
-          if (localStorage.getItem('bastardsENSMap')) {
-            this.ensMap = JSON.parse(localStorage.getItem('bastardsENSMap'));
+          if (localStorage.getItem('hashmaskENSMap')) {
+            this.ensMap = JSON.parse(localStorage.getItem('hashmaskENSMap'));
           } else {
             this.ensMap = ENSMAPSNAPSHOT;
           }
-          if (localStorage.getItem('bastardsTags')) {
-            this.tags = JSON.parse(localStorage.getItem('bastardsTags'));
+          if (localStorage.getItem('hashmaskTags')) {
+            this.tags = JSON.parse(localStorage.getItem('hashmaskTags'));
           }
-          if (localStorage.getItem('bastardsSettings')) {
-            this.settings = JSON.parse(localStorage.getItem('bastardsSettings'));
+          if (localStorage.getItem('hashmaskSettings')) {
+            this.settings = JSON.parse(localStorage.getItem('hashmaskSettings'));
           }
           const separator = window.location.href.indexOf("/#/");
           if (separator > 0) {
