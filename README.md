@@ -1,8 +1,17 @@
-# BestBastardGANPunks
+# BestHashmasks
 
 See https://bokkypoobah.github.io/BestHashmasks/.
 
 The code is mostly in [docs/index.html](docs/index.html), with data generation scripts in [scripts/](scripts/).
+
+<br />
+
+## Contracts
+
+Masks [0xC2C747E0F7004F9E8817Db2ca4997657a7746928](https://etherscan.io/address/0xC2C747E0F7004F9E8817Db2ca4997657a7746928#code)
+NameChangeToken [0x8A9c4dfe8b9D8962B31e4e16F8321C44d48e246E](https://etherscan.io/address/0x8A9c4dfe8b9D8962B31e4e16F8321C44d48e246E#code)
+Hashmasks Registry Contract [0x185c8078285a3de3ec9a2c203ad12853f03c462d](https://etherscan.io/address/0x185c8078285a3de3ec9a2c203ad12853f03c462d#code)
+Hashmasks Datastore Contract [0x7327DbF06b1FcB0D190533fDD244B52361f0d241](https://etherscan.io/address/0x7327DbF06b1FcB0D190533fDD244B52361f0d241#code)
 
 <br />
 
