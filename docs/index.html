@@ -72,8 +72,9 @@
             -->
 
             <div v-for="item in getSelectedShowcase">
-              <b-link @click="displayToken(item)">
-                <b-avatar rounded="sm" variant="light" size="3.0rem" :src="'images/Hashmask_' + item + '.jpg'" v-b-popover.hover.bottom="'#' + item" class="ml-2"></b-avatar>
+              <b-link @click="displayTokenNew('images/Hashmask_' + item + '.jpg')">
+                <!-- <b-avatar rounded="sm" variant="light" size="3.0rem" :src="'images/Hashmask_' + item + '.jpg'" v-b-popover.hover.bottom="'#' + item" class="ml-2"></b-avatar> -->
+                <b-img-lazy width="40%" :src="'images/Hashmask_' + item + '.jpg'" v-b-popover.hover.bottom="'#' + item" class="ml-4"/>
               </b-link>
             </div>
 
@@ -90,11 +91,11 @@
             <div>
               <b-modal ref="my-modal" hide-footer @shown="onGIFFrameSelectionModalOpened">
                 <template #modal-title>
-                  {{ selectedTokenId == null ? null : data[selectedTokenId].name }}
+                  {{ selectedURL }}
                   <span v-if="selectedItemIsGIF"> - Frame {{ selectedItemFrame == null ? '(loading)' : selectedItemFrame }}</span>
                 </template>
                 <div class="d-block text-center">
-                  <img id="thegif1" :src="selectedTokenId == null ? null : data[selectedTokenId].osimage" :rel:animated_src="selectedTokenId == null ? null : data[selectedTokenId].osimage" width="400" height="400" rel:auto_play="0" rel:rubbable="1" class="pr-3" />
+                  <img id="thegif1" :src="selectedURL" :rel:animated_src="selectedURL" width="400" height="400" rel:auto_play="0" rel:rubbable="1" class="pr-3" />
                 </div>
                 <b-input-group v-if="selectedItemIsGIF">
                   <template #prepend>
@@ -510,6 +511,8 @@
             { value: 2145, text: '2,145/P' },
             { value: 66666, text: 'ALL' },
           ],
+
+          selectedURL: null,
 
           selectedTokenId: null,
           selectedItemFrame: 0,
@@ -961,6 +964,24 @@
           },
 
           // --- GIF Frame Extraction ---
+          async displayTokenNew(url) {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url);
+            const t = this;
+            xhr.onload = function() {
+              if (xhr.response.substring(0, 3) == "GIF") {
+                t.selectedItemIsGIF = true;
+              } else {
+                t.selectedItemIsGIF = false;
+              }
+              t.selectedURL = url;
+              t.$refs['my-modal'].show();
+            }
+            xhr.onerror = function() {
+              alert('A network error occurred!');
+            };
+            xhr.send();
+          },
           async displayToken(tokenId) {
             const xhr = new XMLHttpRequest();
             xhr.open('GET', this.data[tokenId].osimage);
